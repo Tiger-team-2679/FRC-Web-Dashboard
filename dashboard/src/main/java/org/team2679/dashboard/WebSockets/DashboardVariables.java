@@ -7,14 +7,11 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.json.JSONObject;
-import org.team2679.dashboard.Dashboard;
 import org.team2679.dashboard.DashboardConfig;
 import org.team2679.util.Notifier;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @WebSocket
 public class DashboardVariables {

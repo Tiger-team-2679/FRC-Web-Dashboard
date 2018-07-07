@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tiger Dashboard</title>
+
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/navbar.css">
+    <link rel="stylesheet" href="style/logger.css">
+    <link rel="stylesheet" href="style/dashboardVariables.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="resizeable">
+            <div class="navbar">
+                <h2>Tiger Team</h2>
+                <ul>
+                    <li><a href="#Cool And Good">Cool And Good</a></li>
+                    <li><a href="#config">Config</a></li>
+                    <li><a href="/">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="row data-row">
+                <div class="col" id="camera">
+                    <div class="camera-feed"  style="background-color: rgba(240, 240, 240); width:100%; height:100%;"></div>
+                </div>
+                <div class="col" id="data">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Key</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#assign x=8>
+                            <#list 1..x as i>
+                            <tr class="data-entry">
+                                <td>&nbsp</td>
+                                <td>&nbsp</td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" style="background-color: rgba(230, 230, 230);">
+                    </div>
+                </div>
+            </div>
+            <!-- Columns are always 50% wide, on mobile and desktop -->
+            <div class="row log-row">
+                <div class="col">
+                    <div class="logger">
+                        &nbsp
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/vendor/jquery.min.js"></script>
+    <script src="script/vendor/bootstrap.min.js"></script>
+    <script src="script/dashboardVariables.js"></script>
+    <script src="script/logger.js"></script>
+    <script src="script/camera.js"></script>
+</body>
+</html>

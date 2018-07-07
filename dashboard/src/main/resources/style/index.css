@@ -1,0 +1,55 @@
+html {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(250, 250, 250);
+    display: flex;
+    align-items: center;
+}
+
+body{
+    min-width: 900px !important;
+    min-height: 670px !important;
+    margin: 0 auto;
+}
+
+.container {
+    height: 670px;
+}
+
+.resizeable {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+.row{
+    flex: 0 0 calc(33.33% - 20px);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.data-row{
+    flex: 0 0 calc(60% - 20px);
+}
+.log-row{
+    flex: 0 0 calc(40% - 20px);
+}
+
+.col{
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.data-row .col{
+       display:inline-block;
+       float:left;
+       width:50%;
+}
+
+
+.data-row #data .row{
+       height: 50%;
+}

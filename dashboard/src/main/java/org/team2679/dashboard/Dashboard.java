@@ -3,6 +3,8 @@ package org.team2679.dashboard;
 import org.team2679.dashboard.Views.Index;
 import org.team2679.dashboard.Views.View;
 import org.team2679.dashboard.WebSockets.DashboardVariables;
+import org.team2679.dashboard.WebSockets.LoggerSocket;
+import org.team2679.util.log.Logger;
 
 import java.io.*;
 import java.util.concurrent.TimeUnit;
@@ -14,13 +16,23 @@ public class Dashboard {
     final static int PORT = 2679;
 
     public static void init(){
+        Logger.INSTANCE.logRobotInit();
+        Logger.INSTANCE.logRobotSetup();
+        Logger.INSTANCE.logThrowException(new FileNotFoundException(" this is just a test... relax"));
+
         port(PORT);
 
         webSocket("/socket/coolandgood", DashboardVariables.class);
+        webSocket("/socket/logger", LoggerSocket.class);
 
         get("/script/:file", (req, res) -> {
             res.type("text/javascript");
             return loadResource("script/" + req.params(":file"));
+        });
+
+        get("/script/vendor/:file", (req, res) -> {
+            res.type("text/javascript");
+            return loadResource("script/vendor/" + req.params(":file"));
         });
 
         get("/style/:file", (req, res) -> {
@@ -35,9 +47,26 @@ public class Dashboard {
 
         // start all sockets
         DashboardVariables.start();
+        Logger.INSTANCE.registerHandler(new LoggerSocket());
 
         // register all routes
         registerView(new Index());
+
+        Thread t = new Thread(){
+            @Override
+            public void run() {
+                for(int i = 0; i < 10000; i ++){
+                    try {
+                        DashboardVariables.putNumber("Count", i);
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+                    catch (Exception e){ }
+                }
+            }
+        };
+        t.start();
+        DashboardVariables.putBoolean("This is working", true);
+        Logger.INSTANCE.logDisableEvent();
     }
 
     private static void registerView(View view){
@@ -72,6 +101,13 @@ public class Dashboard {
         catch (Exception e){
             return "";
         }
+    }
+
+    public static String getResourceLoc(String path){
+        try {
+            return ClassLoader.getSystemClassLoader().getResource(path).toString();
+        }
+        catch (Exception e) { return null; }
     }
 
     public static void main(String[] args) {

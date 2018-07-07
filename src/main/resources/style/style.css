@@ -1,0 +1,23 @@
+#variables {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:10px;
+    border-collapse: collapse;
+    width: 300px;
+}
+
+#variables td, #variables th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#variables tr:nth-child(even){background-color: #f2f2f2;}
+
+#variables tr:hover {background-color: #ddd;}
+
+#variables th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

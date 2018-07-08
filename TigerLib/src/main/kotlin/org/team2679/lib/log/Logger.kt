@@ -10,7 +10,7 @@ import java.io.PrintWriter
 object Logger {
 
     private val startTime = getTimeStamp()
-    private val path = "/home/slowl0ris/FRC/"
+    private val path = "C:\\Users\\user\\Desktop\\Workspace\\FRC\\"
 
     private var handlers = ArrayList<LogHandler>()
 
@@ -71,7 +71,7 @@ object Logger {
     private fun logSetup() {
         runBlocking {
             try {
-                PrintWriter(path + "/RobotLog_" + startTime + ".txt", "UTF-8").use { writer ->
+                PrintWriter(getLogFile(), "UTF-8").use { writer ->
                     writer.println("*** ROBOT LOG ***")
                     writer.println("*** START TIME : " + startTime + " ***")
                     writer.append("\n")
@@ -88,7 +88,7 @@ object Logger {
             var message = string;
             var formatted = "[" + time + "]" + " " + type.toString().toUpperCase() + " >> " + message;
             try {
-                PrintWriter(FileWriter(path + "/RobotLog_" + startTime + ".txt", true)).use { writer ->
+                PrintWriter(FileWriter(getLogFile(), true)).use { writer ->
                     writer.println("[" + time + "]" + " " + type.toString().toUpperCase() + " >> " + string)
                 }
             } catch (e: IOException) {
@@ -111,7 +111,7 @@ object Logger {
             var formatted = "[" + time + "]" + " " + ENTRY_TYPE.EXCEPTION + exceptionType + " >> " + message;
 
             try {
-                PrintWriter(FileWriter(path + "/RobotLog_" + startTime + ".txt", true)).use { writer ->
+                PrintWriter(FileWriter(getLogFile(), true)).use { writer ->
                     writer.println(formatted)
                 }
             } catch (e: IOException) {
@@ -124,6 +124,6 @@ object Logger {
     }
 
     fun getLogFile(): String{
-        return path + "/RobotLog_" + startTime + ".txt"
+        return path + "/RobotLog.txt"
     }
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style/index.css">
     <link rel="stylesheet" href="style/navbar.css">
     <link rel="stylesheet" href="style/logger.css">
-    <link rel="stylesheet" href="style/dashboardVariables.css">
+    <link rel="stylesheet" href="style/retrievalTable.css">
 </head>
 
 <body>
@@ -16,8 +16,6 @@
             <div class="navbar">
                 <h2>Tiger Team</h2>
                 <ul>
-                    <li><a href="#Cool And Good">Cool And Good</a></li>
-                    <li><a href="#config">Config</a></li>
                     <li><a href="/">Dashboard</a></li>
                 </ul>
             </div>
@@ -26,7 +24,7 @@
                     <div class="camera-feed"  style="background-color: rgba(240, 240, 240); width:100%; height:100%;"></div>
                 </div>
                 <div class="col" id="data">
-                    <div class="row">
+                    <div class="row row-6">
                         <table class="table">
                             <thead>
                             <tr>
@@ -35,7 +33,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#assign x=8>
+                            <#assign x=6>
                             <#list 1..x as i>
                             <tr class="data-entry">
                                 <td>&nbsp</td>
@@ -45,7 +43,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row" style="background-color: rgba(230, 230, 230);">
+                    <div class="row row-12" style="background-color: rgba(230, 230, 230);">
                     </div>
                 </div>
             </div>

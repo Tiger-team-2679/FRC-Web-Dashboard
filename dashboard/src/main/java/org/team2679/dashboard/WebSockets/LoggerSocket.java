@@ -27,7 +27,9 @@ public class LoggerSocket implements LogHandler {
             String ln;
             while ((ln = file_reader.readLine()) != null)
                 session.getRemote().sendString(ln);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            Logger.INSTANCE.logThrowException(e);
+        }
     }
 
     @OnWebSocketClose
@@ -43,7 +45,9 @@ public class LoggerSocket implements LogHandler {
         sessions.forEach(session -> {
             try {
                 session.getRemote().sendString(formatted);
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                Logger.INSTANCE.logThrowException(e);
+            }
         });
     }
 }

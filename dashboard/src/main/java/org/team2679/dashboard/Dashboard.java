@@ -1,29 +1,25 @@
 package org.team2679.dashboard;
 
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.team2679.dashboard.Views.Index;
 import org.team2679.dashboard.Views.View;
-import org.team2679.dashboard.WebSockets.DashboardVariables;
+import org.team2679.dashboard.WebSockets.RetrievalSocket;
 import org.team2679.dashboard.WebSockets.LoggerSocket;
 import org.team2679.util.log.Logger;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 import static spark.Spark.*;
 
 public class Dashboard {
 
-    final static int PORT = 2679;
-
-    public static void init(){
-        Logger.INSTANCE.logRobotInit();
-        Logger.INSTANCE.logRobotSetup();
-        Logger.INSTANCE.logThrowException(new FileNotFoundException(" this is just a test... relax"));
-
+    public static void init(int PORT){
         port(PORT);
-
-        webSocket("/socket/coolandgood", DashboardVariables.class);
-        webSocket("/socket/logger", LoggerSocket.class);
+        webSocket("/socket/coolandgood", RetrievalSocket.class);
+        webSocket("/socket/logger",LoggerSocket.class);
 
         get("/script/:file", (req, res) -> {
             res.type("text/javascript");
@@ -45,31 +41,10 @@ public class Dashboard {
             return resourceRaw("img/" + req.params(":file"));
         });
 
-        // start all sockets
-        DashboardVariables.start();
-        Logger.INSTANCE.registerHandler(new LoggerSocket());
-
-        // register all routes
         registerView(new Index());
-
-        Thread t = new Thread(){
-            @Override
-            public void run() {
-                for(int i = 0; i < 10000; i ++){
-                    try {
-                        DashboardVariables.putNumber("Count", i);
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
-                    catch (Exception e){ }
-                }
-            }
-        };
-        t.start();
-        DashboardVariables.putBoolean("This is working", true);
-        Logger.INSTANCE.logDisableEvent();
     }
 
-    private static void registerView(View view){
+    public static void registerView(View view){
         get(view.address(), (req, res) -> view.handle(req, res));
     }
 
@@ -83,6 +58,7 @@ public class Dashboard {
             }
             return output.toByteArray();
         } catch (IOException e) {
+            Logger.INSTANCE.logThrowException(e);
             return new byte[0];
         }
     }
@@ -99,19 +75,53 @@ public class Dashboard {
             return file;
         }
         catch (Exception e){
+            Logger.INSTANCE.logThrowException(e);
             return "";
         }
     }
 
-    public static String getResourceLoc(String path){
+    public static void putNumber(String name, int value){
         try {
-            return ClassLoader.getSystemClassLoader().getResource(path).toString();
+            Method method = RetrievalSocket.class.getDeclaredMethod("putNumber", String.class, int.class);
+            method.setAccessible(true);
+            method.invoke(null, name, value);
         }
-        catch (Exception e) { return null; }
+        catch (Exception e){
+            Logger.INSTANCE.logThrowException(e);
+        }
     }
 
-    public static void main(String[] args) {
-        init();
+    public static void putString(String name, String value){
+        try {
+            Method method = RetrievalSocket.class.getDeclaredMethod("putString", String.class, String.class);
+            method.setAccessible(true);
+            method.invoke(null, name, value);
+        }
+        catch (Exception e){
+            Logger.INSTANCE.logThrowException(e);
+        }
+    }
+
+    public static void putDouble(String name, double value){
+        try {
+            Method method = RetrievalSocket.class.getDeclaredMethod("putDouble", String.class, double.class);
+            method.setAccessible(true);
+            method.invoke(null, name, value);
+        }
+        catch (Exception e){
+            Logger.INSTANCE.logThrowException(e);
+        }
+    }
+
+    public static void putBoolean(String name, boolean value){
+        try {
+            Method method = RetrievalSocket.class.getDeclaredMethod("putBoolean", String.class, boolean.class);
+            method.setAccessible(true);
+            method.invoke(null, name, value);
+        }
+        catch (Exception e){
+            Logger.INSTANCE.logThrowException(e);
+        }
     }
 }
 

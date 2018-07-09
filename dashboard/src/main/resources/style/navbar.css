@@ -1,8 +1,8 @@
 .navbar{
   	display: flex;
  	align-items: flex-end;
-    flex: 0 0 60px;
-    border-bottom: 1px solid rgba(180,180,180, 0.5);
+    height: 60px;
+    border-bottom: 2px solid rgba(180,180,180, 0.5);
 }
 
 .navbar h2{

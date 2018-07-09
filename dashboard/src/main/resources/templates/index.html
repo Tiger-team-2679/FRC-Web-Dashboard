@@ -11,50 +11,65 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <h2>Tiger Team</h2>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+        </ul>
+    </div>
     <div class="container">
         <div class="resizeable">
-            <div class="navbar">
-                <h2>Tiger Team</h2>
-                <ul>
-                    <li><a href="/">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="row data-row">
-                <div class="col" id="camera">
-                    <div class="camera-feed"  style="background-color: rgba(240, 240, 240); width:100%; height:100%;"></div>
+            <div class="row row-8" style="padding-bottom:0px">
+
+                <!-- allocated free space big enough for camera feed -->
+                <div class="col col-6">
+                    <div class="row row-12">
+                        <div class="col col-12 box"  style="background-color: rgba(230, 230, 230); " > </div>
+                    </div>
                 </div>
-                <div class="col" id="data">
+
+                <!-- table containing variables from robot -->
+                <div class="col col-6 " id="data">
                     <div class="row row-6">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Key</th>
-                                <th scope="col">Value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <#assign x=6>
-                            <#list 1..x as i>
-                            <tr class="data-entry">
-                                <td>&nbsp</td>
-                                <td>&nbsp</td>
-                            </tr>
-                            </#list>
-                            </tbody>
-                        </table>
+                        <div class="col col-12 box" style="border-color: rgba(255,114, 0); overflow:auto;">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Key</th>
+                                    <th scope="col">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#assign x=9>
+                                <#list 1..x as i>
+                                <tr class="data-entry">
+                                    <td>&nbsp</td>
+                                    <td>&nbsp</td>
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="row row-6" style="background-color: rgba(230, 230, 230);">
+
+                    <!-- allocated free space -->
+                    <div class="row row-6">
+                        <div class="col col-12 box" style="background-color: rgba(230, 230, 230);"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- bottom row containign logger -->
+            <div class="row row-4" style="padding-top:0px">
+                <div class="col col-12">
+                    <div class="col col-12">
+                        <div class="logger box" style="border-color: rgba(255,114, 0);">
+
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Columns are always 50% wide, on mobile and desktop -->
-            <div class="row log-row">
-                <div class="col">
-                    <div class="logger">
-                        &nbsp
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 

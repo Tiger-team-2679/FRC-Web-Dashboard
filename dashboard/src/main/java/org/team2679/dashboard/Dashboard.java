@@ -1,6 +1,5 @@
 package org.team2679.dashboard;
 
-import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.team2679.dashboard.Views.Index;
 import org.team2679.dashboard.Views.View;
 import org.team2679.dashboard.WebSockets.RetrievalSocket;
@@ -8,16 +7,17 @@ import org.team2679.dashboard.WebSockets.LoggerSocket;
 import org.team2679.util.log.Logger;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 import static spark.Spark.*;
 
-public class Dashboard {
+public enum Dashboard {
 
-    public static void init(int PORT){
+    INSTANCE;
+
+    public void init(int PORT){
         port(PORT);
+        Logger.INSTANCE.registerHandler(new LoggerSocket());
         webSocket("/socket/coolandgood", RetrievalSocket.class);
         webSocket("/socket/logger",LoggerSocket.class);
 
@@ -44,11 +44,11 @@ public class Dashboard {
         registerView(new Index());
     }
 
-    public static void registerView(View view){
+    public void registerView(View view){
         get(view.address(), (req, res) -> view.handle(req, res));
     }
 
-    public static byte[] resourceRaw(String path) {
+    public byte[] resourceRaw(String path) {
         try(InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path)) {
             byte[] buffer = new byte[8192];
             int bytesRead;
@@ -63,7 +63,7 @@ public class Dashboard {
         }
     }
 
-    public static String loadResource(String path){
+    public String loadResource(String path){
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(path)));
             String line;
@@ -80,7 +80,7 @@ public class Dashboard {
         }
     }
 
-    public static void putNumber(String name, int value){
+    public void putNumber(String name, int value){
         try {
             Method method = RetrievalSocket.class.getDeclaredMethod("putNumber", String.class, int.class);
             method.setAccessible(true);
@@ -91,7 +91,7 @@ public class Dashboard {
         }
     }
 
-    public static void putString(String name, String value){
+    public void putString(String name, String value){
         try {
             Method method = RetrievalSocket.class.getDeclaredMethod("putString", String.class, String.class);
             method.setAccessible(true);
@@ -102,7 +102,7 @@ public class Dashboard {
         }
     }
 
-    public static void putDouble(String name, double value){
+    public void putDouble(String name, double value){
         try {
             Method method = RetrievalSocket.class.getDeclaredMethod("putDouble", String.class, double.class);
             method.setAccessible(true);
@@ -113,7 +113,7 @@ public class Dashboard {
         }
     }
 
-    public static void putBoolean(String name, boolean value){
+    public void putBoolean(String name, boolean value){
         try {
             Method method = RetrievalSocket.class.getDeclaredMethod("putBoolean", String.class, boolean.class);
             method.setAccessible(true);

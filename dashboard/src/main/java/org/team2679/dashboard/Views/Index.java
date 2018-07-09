@@ -24,7 +24,7 @@ public class Index implements View {
         Configuration cfg = new Configuration();
         cfg.setObjectWrapper(new DefaultObjectWrapper());
 
-        Template t = new Template("templateName", new StringReader(Dashboard.loadResource("templates/index.html")), cfg);
+        Template t = new Template("templateName", new StringReader(Dashboard.INSTANCE.loadResource("templates/index.html")), cfg);
 
         Writer out = new StringWriter();
         t.process(model, out);

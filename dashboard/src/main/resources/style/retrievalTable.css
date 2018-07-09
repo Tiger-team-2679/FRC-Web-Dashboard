@@ -6,7 +6,7 @@
 
 .table thead {
 	display: block;
-	height: 12%;
+	height: 22%;
 	width: 100%;
 	border-bottom: 10px solid rgba(0,0,0,0);
 }
@@ -25,8 +25,7 @@
 
 .table tbody{
 	display: block;
-	height: 88%;
-	overflow: auto;
+	height: 78%;
 	width: 100%
 }
 

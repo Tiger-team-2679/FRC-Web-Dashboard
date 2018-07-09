@@ -10,11 +10,12 @@ import org.team2679.util.log.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @WebSocket
 public class RetrievalSocket {
 
-    private static ArrayList<Session> sessions = new ArrayList<>();
+    private static ConcurrentLinkedQueue<Session> sessions = new ConcurrentLinkedQueue<>();
 
     private static JSONObject values = new JSONObject();
 

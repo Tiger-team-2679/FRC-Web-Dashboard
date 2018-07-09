@@ -13,11 +13,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @WebSocket
 public class LoggerSocket implements LogHandler {
 
-    private static ArrayList<Session> sessions = new ArrayList<>();
+    private static ConcurrentLinkedQueue<Session> sessions = new ConcurrentLinkedQueue<>();
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws Exception {

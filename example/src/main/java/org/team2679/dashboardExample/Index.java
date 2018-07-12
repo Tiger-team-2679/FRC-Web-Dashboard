@@ -1,3 +1,5 @@
+package org.team2679.dashboardExample;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;

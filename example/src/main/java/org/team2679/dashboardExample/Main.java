@@ -1,3 +1,5 @@
+package org.team2679.dashboardExample;
+
 import org.team2679.dashboard.Dashboard;
 import org.team2679.logging.Logger;
 

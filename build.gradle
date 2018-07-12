@@ -1,8 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'application'
-
-mainClassName="Main"
 
 sourceCompatibility = 1.8
 
@@ -13,7 +10,6 @@ repositories {
 
 dependencies {
     implementation 'com.github.Tiger-team-2679:FRC-Logger:v1.0.0'
-    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.14'
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.5.5'
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.11.v20180605'
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.11.v20180605'

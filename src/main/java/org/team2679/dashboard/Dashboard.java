@@ -71,9 +71,7 @@ public enum Dashboard {
 
     public String loadResource(String path){
         try{
-            Logger.INSTANCE.logDEBUG(path,"dashboard");
             BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(path)));
-            Logger.INSTANCE.logDEBUG(path,"dashboard");
             String line;
             String file = "";
             while ((line = reader.readLine()) != null) {

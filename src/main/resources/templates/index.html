@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tiger Dashboard</title>
+
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/navbar.css">
+    <link rel="stylesheet" href="style/logger.css">
+    <link rel="stylesheet" href="style/retrievalTable.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h2>Tiger Team</h2>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="resizeable">
+            <div class="row row-8" style="padding-bottom:0px">
+
+                <!-- allocated free space big enough for camera feed -->
+                <div class="col col-6">
+                    <div class="row row-12">
+                        <div class="col col-12 box"  style="background-color: rgba(230, 230, 230); " > </div>
+                    </div>
+                </div>
+
+                <!-- table containing variables from robot -->
+                <div class="col col-6 " id="data">
+                    <div class="row row-6">
+                        <div class="col col-12 box" style="border-color: rgba(255,114, 0); overflow:auto;">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Key</th>
+                                    <th scope="col">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#assign x=9>
+                                <#list 1..x as i>
+                                <tr class="data-entry">
+                                    <td>&nbsp</td>
+                                    <td>&nbsp</td>
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- allocated free space -->
+                    <div class="row row-6">
+                        <div class="col col-12 box" style="background-color: rgba(230, 230, 230);"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- bottom row containign logger -->
+            <div class="row row-4" style="padding-top:0px">
+                <div class="col col-12">
+                    <div class="col col-12">
+                        <div class="logger box" style="border-color: rgba(255,114, 0);">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script/vendor/jquery.min.js"></script>
+    <script src="script/vendor/bootstrap.min.js"></script>
+    <script src="script/dashboardVariables.js"></script>
+    <script src="script/logger.js"></script>
+    <script src="script/camera.js"></script>
+</body>
+</html>

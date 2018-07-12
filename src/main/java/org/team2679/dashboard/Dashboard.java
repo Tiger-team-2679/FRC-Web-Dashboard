@@ -1,10 +1,9 @@
 package org.team2679.dashboard;
 
-import org.team2679.dashboard.Views.Index;
 import org.team2679.dashboard.Views.View;
 import org.team2679.dashboard.WebSockets.RetrievalSocket;
 import org.team2679.dashboard.WebSockets.LoggerSocket;
-import org.team2679.util.log.Logger;
+import org.team2679.logging.Logger;
 
 import java.io.*;
 import java.lang.reflect.Method;
@@ -15,33 +14,40 @@ public enum Dashboard {
 
     INSTANCE;
 
+    private boolean initiated = false;
+
     public void init(int PORT){
-        port(PORT);
-        Logger.INSTANCE.registerHandler(new LoggerSocket());
-        webSocket("/socket/coolandgood", RetrievalSocket.class);
-        webSocket("/socket/logger",LoggerSocket.class);
+        if(!initiated) {
+            initiated = true;
+            port(PORT);
+            Logger.INSTANCE.logINFO("dashboard initiated", "dashboard");
+            Logger.INSTANCE.registerHandler(new LoggerSocket());
+            webSocket("/socket/coolandgood", RetrievalSocket.class);
+            webSocket("/socket/logger", LoggerSocket.class);
 
-        get("/script/:file", (req, res) -> {
-            res.type("text/javascript");
-            return loadResource("script/" + req.params(":file"));
-        });
+            get("/script/:file", (req, res) -> {
+                res.type("text/javascript");
+                return loadResource("script/" + req.params(":file"));
+            });
 
-        get("/script/vendor/:file", (req, res) -> {
-            res.type("text/javascript");
-            return loadResource("script/vendor/" + req.params(":file"));
-        });
+            get("/script/vendor/:file", (req, res) -> {
+                res.type("text/javascript");
+                return loadResource("script/vendor/" + req.params(":file"));
+            });
 
-        get("/style/:file", (req, res) -> {
-            res.type("text/css");
-            return loadResource("style/" + req.params(":file"));
-        });
+            get("/style/:file", (req, res) -> {
+                res.type("text/css");
+                return loadResource("style/" + req.params(":file"));
+            });
 
-        get("/img/:file", (req, res) -> {
-            res.type("image");
-            return resourceRaw("img/" + req.params(":file"));
-        });
-
-        registerView(new Index());
+            get("/img/:file", (req, res) -> {
+                res.type("image");
+                return resourceRaw("img/" + req.params(":file"));
+            });
+        }
+        else{
+            Logger.INSTANCE.logWARNING("initiated dashboard twice", "dashboard");
+        }
     }
 
     public void registerView(View view){
@@ -58,14 +64,16 @@ public enum Dashboard {
             }
             return output.toByteArray();
         } catch (IOException e) {
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("problem getting raw resource", "dashboard", "resources");
             return new byte[0];
         }
     }
 
     public String loadResource(String path){
         try{
+            Logger.INSTANCE.logDEBUG(path,"dashboard");
             BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(path)));
+            Logger.INSTANCE.logDEBUG(path,"dashboard");
             String line;
             String file = "";
             while ((line = reader.readLine()) != null) {
@@ -75,7 +83,7 @@ public enum Dashboard {
             return file;
         }
         catch (Exception e){
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("problem loading resources", "dashboard", "resource");
             return "";
         }
     }
@@ -87,7 +95,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
         }
     }
 
@@ -98,7 +106,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
         }
     }
 
@@ -109,7 +117,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
         }
     }
 
@@ -120,7 +128,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
         }
     }
 }

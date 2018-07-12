@@ -6,10 +6,9 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.json.JSONObject;
-import org.team2679.util.log.Logger;
+import org.team2679.logging.Logger;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @WebSocket
@@ -21,7 +20,13 @@ public class RetrievalSocket {
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws Exception {
-        sessions.add(session);
+    sessions.add(session);
+        try{
+            session.getRemote().sendString(values.toString());
+        } catch (Exception e) {
+            Logger.INSTANCE.logFATAL("problem sending data to client upon connection", "dashboard", "retrievalSocket");
+        }
+
     }
 
     @OnWebSocketClose
@@ -30,22 +35,14 @@ public class RetrievalSocket {
     }
 
     @OnWebSocketMessage
-    public void onMessage(Session user, String message) throws IOException {
-        sessions.forEach(session -> {
-            try{
-                session.getRemote().sendString(message);
-            } catch (Exception e) {
-                Logger.INSTANCE.logThrowException(e);
-            }
-        });
-    }
+    public void onMessage(Session user, String message) throws IOException { }
 
     private static void onPut(){
         sessions.forEach(session -> {
             try{
                 session.getRemote().sendString(values.toString());
             } catch (Exception e) {
-                Logger.INSTANCE.logThrowException(e);
+                Logger.INSTANCE.logFATAL("problem sending data to clients", "dashboard", "retrievalSocket");
             }
         });
     }

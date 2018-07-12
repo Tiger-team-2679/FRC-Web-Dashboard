@@ -5,14 +5,12 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import org.jetbrains.annotations.NotNull;
-import org.team2679.util.log.LogHandler;
-import org.team2679.util.log.Logger;
+import org.team2679.logging.LogHandler;
+import org.team2679.logging.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @WebSocket
@@ -24,12 +22,15 @@ public class LoggerSocket implements LogHandler {
     public void onConnect(Session session) throws Exception {
         sessions.add(session);
         try {
-            BufferedReader file_reader = new BufferedReader(new FileReader(Logger.INSTANCE.getLogFile()));
-            String ln;
-            while ((ln = file_reader.readLine()) != null)
-                session.getRemote().sendString(ln);
+            Logger.INSTANCE.getBuffered().forEach(it -> {
+                try {
+                    session.getRemote().sendString(it);
+                } catch (IOException e) {
+                    Logger.INSTANCE.logFATAL("problem parsing buffered data from logger", "dashboard", "loggerSocket");
+                }
+            });
         } catch (Exception e) {
-            Logger.INSTANCE.logThrowException(e);
+            Logger.INSTANCE.logFATAL("exception on client connection to the logger socket", "dashboard", "loggerSocket");
         }
     }
 
@@ -42,12 +43,12 @@ public class LoggerSocket implements LogHandler {
     public void onMessage(Session user, String message) throws IOException { }
 
     @Override
-    public void onLog(@NotNull Logger.ENTRY_TYPE type, @NotNull String message, @NotNull String formatted) {
+    public void onLog(Logger.LOG_LEVEL log_level, String[] tags, String message, String formatted, String time) {
         sessions.forEach(session -> {
             try {
                 session.getRemote().sendString(formatted);
             } catch (Exception e) {
-                Logger.INSTANCE.logThrowException(e);
+                Logger.INSTANCE.logFATAL("problem sending log info to clients", "dashboard", "loggerSocket");
             }
         });
     }

@@ -12,7 +12,7 @@ This is a custom frc dashboard for competiton, it allows us to visualize the dat
 We wanted to create a custom modular way to pass data between the driver station and the robot and to create our own modular elements to be on the dashboard. for example, a log file could be shown in the custom dashboard or a camera feed with marked targets over the video. 
 Using the [Spark](http://sparkjava.com/) framework, we are hosting a server on the robot containing the dashboard design files (HTML/CSS), And when a user is connected to the robot, he will be able to access those files throw the browser, like a website. Then using the [WebSocket protocol](https://en.wikipedia.org/wiki/WebSocket) we send data updates from the robot to the browser and vice versa.
 
-### Instalaltion
+### Installation
 
 If you are using Gradle, good news because that's the easiest way to add the project to your robot.
 

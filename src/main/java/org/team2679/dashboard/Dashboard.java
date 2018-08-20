@@ -46,7 +46,7 @@ public enum Dashboard {
             });
         }
         else{
-            Logger.INSTANCE.logWARNING("initiated dashboard twice", "dashboard");
+            Logger.INSTANCE.logWARNING("dashboard initiated twice", "dashboard");
         }
     }
 

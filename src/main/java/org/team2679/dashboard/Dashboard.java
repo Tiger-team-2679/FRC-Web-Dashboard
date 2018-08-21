@@ -22,27 +22,27 @@ public enum Dashboard {
             port(PORT);
             Logger.INSTANCE.logINFO("dashboard initiated", "dashboard");
             Logger.INSTANCE.registerHandler(new LoggerSocket());
-            webSocket("/socket/coolandgood", RetrievalSocket.class);
+            webSocket("/socket/retrieval;", RetrievalSocket.class);
             webSocket("/socket/logger", LoggerSocket.class);
 
             get("/script/:file", (req, res) -> {
                 res.type("text/javascript");
-                return loadResource("script/" + req.params(":file"));
+                return loadResource("dashboard/script/" + req.params(":file"));
             });
 
             get("/script/vendor/:file", (req, res) -> {
                 res.type("text/javascript");
-                return loadResource("script/vendor/" + req.params(":file"));
+                return loadResource("dashboard/script/vendor/" + req.params(":file"));
             });
 
             get("/style/:file", (req, res) -> {
                 res.type("text/css");
-                return loadResource("style/" + req.params(":file"));
+                return loadResource("dashboard/style/" + req.params(":file"));
             });
 
             get("/img/:file", (req, res) -> {
                 res.type("image");
-                return resourceRaw("img/" + req.params(":file"));
+                return resourceRaw("dashboard/img/" + req.params(":file"));
             });
         }
         else{
@@ -64,7 +64,6 @@ public enum Dashboard {
             }
             return output.toByteArray();
         } catch (IOException e) {
-            Logger.INSTANCE.logFATAL("problem getting raw resource", "dashboard", "resources");
             return new byte[0];
         }
     }
@@ -81,7 +80,6 @@ public enum Dashboard {
             return file;
         }
         catch (Exception e){
-            Logger.INSTANCE.logFATAL("problem loading resources", "dashboard", "resource");
             return "";
         }
     }
@@ -93,7 +91,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
+            Logger.INSTANCE.logFATAL("problem accrued on dashboard putNumber() ", "dashboard");
         }
     }
 
@@ -104,7 +102,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
+            Logger.INSTANCE.logFATAL("problem accrued on dashboard putString() ", "dashboard");
         }
     }
 
@@ -115,7 +113,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
+            Logger.INSTANCE.logFATAL("problem accrued on dashboard putDouble() ", "dashboard");
         }
     }
 
@@ -126,7 +124,7 @@ public enum Dashboard {
             method.invoke(null, name, value);
         }
         catch (Exception e){
-            Logger.INSTANCE.logFATAL("having problem calling data putter", "dashboard", "put");
+            Logger.INSTANCE.logFATAL("problem accrued on dashboard putBoolean() ", "dashboard");
         }
     }
 }

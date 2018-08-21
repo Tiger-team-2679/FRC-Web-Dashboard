@@ -1,7 +1,7 @@
 var loc = window.location, new_uri;
 new_uri = "ws:"
 new_uri += "//" + loc.host;
-new_uri += "/socket/coolandgood";
+new_uri += "/socket/retrieval";
 
 var socket = new WebSocket(new_uri);
 socket.onmessage = function(event) {

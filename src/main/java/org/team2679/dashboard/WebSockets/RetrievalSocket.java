@@ -6,7 +6,6 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.json.JSONObject;
-import org.team2679.logging.Logger;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -22,10 +21,10 @@ public class RetrievalSocket {
     public void onConnect(Session session) throws Exception {
     sessions.add(session);
         try{
-            session.getRemote().sendString(values.toString());
-        } catch (Exception e) {
-            Logger.INSTANCE.logFATAL("problem sending data to client upon connection", "dashboard", "retrievalSocket");
-        }
+            if(values != null) {
+                session.getRemote().sendString(values.toString());
+            }
+        } catch (Exception e) { }
 
     }
 
@@ -41,13 +40,9 @@ public class RetrievalSocket {
         sessions.forEach(session -> {
             try{
                 session.getRemote().sendString(values.toString());
-            } catch (Exception e) {
-                Logger.INSTANCE.logFATAL("problem sending data to clients", "dashboard", "retrievalSocket");
-            }
+            } catch (Exception e) { }
         });
     }
-
-    private static void message(){System.out.println("hello java"); }
 
     private static void putNumber(String name, int value){
         values.put(name, value);

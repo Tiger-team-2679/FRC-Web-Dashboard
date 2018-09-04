@@ -25,12 +25,10 @@ public class LoggerSocket implements LogHandler {
             Logger.INSTANCE.getBuffered().forEach(it -> {
                 try {
                     session.getRemote().sendString(it);
-                } catch (IOException e) {
-                    Logger.INSTANCE.logFATAL("problem parsing buffered data from logger", "dashboard", "loggerSocket");
-                }
+                } catch (IOException e) { }
             });
         } catch (Exception e) {
-            Logger.INSTANCE.logFATAL("exception on client connection to the logger socket", "dashboard", "loggerSocket");
+            Logger.INSTANCE.logFATAL(e.getMessage(), "dashboard", "loggerSocket");
         }
     }
 

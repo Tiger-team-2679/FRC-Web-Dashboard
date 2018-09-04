@@ -22,7 +22,7 @@ public enum Dashboard {
             port(PORT);
             Logger.INSTANCE.logINFO("dashboard initiated", "dashboard");
             Logger.INSTANCE.registerHandler(new LoggerSocket());
-            webSocket("/socket/retrieval;", RetrievalSocket.class);
+            webSocket("/socket/retrieval", RetrievalSocket.class);
             webSocket("/socket/logger", LoggerSocket.class);
 
             get("/script/:file", (req, res) -> {
